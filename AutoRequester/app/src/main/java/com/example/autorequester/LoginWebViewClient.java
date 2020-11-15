@@ -58,7 +58,7 @@ public class LoginWebViewClient extends WebViewClient {
                 @Override
                 public void run() {
                     flag = "0";
-                    if (data.get(1).equals("沙河校区")) {
+                    if (data.get(1).equals("西土城校区")) {
                         flag = "1";
                     }
                     try{
