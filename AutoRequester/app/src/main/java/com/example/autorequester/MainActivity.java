@@ -1,5 +1,6 @@
 package com.example.autorequester;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -419,7 +422,10 @@ public class MainActivity extends AppCompatActivity {
             requestInfoList.add(tmp);
         }
     }
-
+    private AlertDialog dialog;
+    private AlertDialog addDialog;
+    private String matterFilePath;
+    private RequestAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -429,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
         final View dialogView = factory.inflate(R.layout.login_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setView(dialogView);
-        final AlertDialog dialog = builder.create();
+        dialog = builder.create();
         //获取dialog控件
         Button buttonOK = dialogView.findViewById(R.id.buttonOK);
         final EditText name = dialogView.findViewById(R.id.editText_name);
@@ -443,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
         //设置配置文件路径
         final String filePath = this.getFilesDir().getPath() + "/userInfo";
         //设置存放事项信息的配置文件的路径
-        final String matterFilePath = this.getFilesDir().getPath() + "/matterInfo";
+        matterFilePath = this.getFilesDir().getPath() + "/matterInfo";
         //点击确认修改配置文件信息
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -543,20 +549,10 @@ public class MainActivity extends AppCompatActivity {
         if (firstLogin) {
             dialog.show();
         }
-        //点击设置按钮弹出dialog
-        //获取控件,点击设置打开dialog
-        Button settingBtn = findViewById(R.id.setting);
-        settingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
-
         //设置ListView
         //拿到数据放在适配器上
         initRequestInfoList(matterFilePath);
-        final RequestAdapter adapter = new RequestAdapter(MainActivity.this, R.layout.request_item, requestInfoList);
+        adapter = new RequestAdapter(MainActivity.this, R.layout.request_item, requestInfoList);
         //将适配器上的数据传递给listview
         ListView listView = findViewById(R.id.requestListView);
         listView.setAdapter(adapter);
@@ -591,17 +587,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //获取控件，增加事项
-        Button addBtn = findViewById(R.id.add);
-        final View addDialogView = factory.inflate(R.layout.add_dialog, null);
+        final View addDialogView;
+        addDialogView = factory.inflate(R.layout.add_dialog, null);
         AlertDialog.Builder addBuilder = new AlertDialog.Builder(MainActivity.this);
         addBuilder.setView(addDialogView);
-        final AlertDialog addDialog = addBuilder.create();
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDialog.show();
-            }
-        });
+        addDialog = addBuilder.create();
+
         //获取add dialog控件
         final EditText placeEditText = addDialogView.findViewById(R.id.editText_place);
         final EditText matterEditText = addDialogView.findViewById(R.id.editText_matter);
@@ -634,14 +625,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //获取控件，删除事项
-        Button deleteBtn = findViewById(R.id.delete);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMultiChoiceDialog(matterFilePath, adapter);
-            }
-        });
     }
 
     //发送请求
@@ -680,5 +663,30 @@ public class MainActivity extends AppCompatActivity {
 //        data.put("place", requestItem.getPlace());
 //        data.put("matter", requestItem.getMatter());
         return data;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_actions,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_edit:
+                dialog.show();
+                break;
+            case R.id.action_add:
+                addDialog.show();
+                break;
+            case R.id.action_delete:
+                showMultiChoiceDialog(matterFilePath, adapter);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
