@@ -182,7 +182,7 @@ public class LoginWebViewClient extends WebViewClient {
     }
 
     //读取学号和密码
-    private Map<String, String> getUserNameAndPassword(String filePath) {
+    public static Map<String, String> getUserNameAndPassword(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             Log.i("LoginWebViewClient", "matter information file not exists.");

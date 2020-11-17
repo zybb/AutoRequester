@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_edit"
+        android:icon="@drawable/ic_edit"
+        android:title="编辑个人信息"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_add"
+        android:icon="@drawable/ic_add"
+        android:title="增加出校原因"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="删除出校原因"
+        app:showAsAction="always"/>
+</menu>
