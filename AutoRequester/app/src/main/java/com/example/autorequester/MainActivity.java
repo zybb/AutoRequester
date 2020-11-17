@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -573,6 +574,7 @@ public class MainActivity extends AppCompatActivity {
                         Map<String, String> sendInfo = getInfo(filePath);
                         ArrayList<String> data = sendOutRequest(requestItem, sendInfo);
                         intent.putExtra("data", data);
+                        intent.putExtra("requestId",0);
                         startActivityForResult(intent, 0);
                     }
                 });
@@ -624,7 +626,24 @@ public class MainActivity extends AppCompatActivity {
                 addDialog.cancel();
             }
         });
-
+        ConstraintLayout outLayout = findViewById(R.id.out_layout);
+        ConstraintLayout inLayout = findViewById(R.id.in_layout);
+        outLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("requestId",1);
+                startActivity(intent);
+            }
+        });
+        inLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("requestId",2);
+                startActivity(intent);
+            }
+        });
     }
 
     //发送请求
