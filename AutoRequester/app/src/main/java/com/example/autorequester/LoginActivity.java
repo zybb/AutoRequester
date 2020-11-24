@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             webView.setWebViewClient(loginWebViewClient);
             this.setTitle("出校申请");
             mask.setVisibility(View.VISIBLE);
-            webView.loadUrl("https://auth.bupt.edu.cn/authserver/login?service=http%3A%2F%2Fmy.bupt.edu.cn%2Findex.portal");
+            webView.loadUrl("https://service.bupt.edu.cn/v2/matter/m_start?id=578");
             return;
         }
         // 出校码

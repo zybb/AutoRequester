@@ -34,7 +34,7 @@ public class LoginWebViewClient extends WebViewClient {
         Log.i("LoginWebViewClient",url);
         super.onPageFinished(view, url);
         //如果有效期内没有登陆过则会访问登录页面
-        if (url.equals("https://auth.bupt.edu.cn/authserver/login?service=http%3A%2F%2Fmy.bupt.edu.cn%2Findex.portal")) {
+        if (url.startsWith("https://auth.bupt.edu.cn/authserver/login")) {
             //读配置文件获取学号和密码
             Map<String, String> userNameAndPassword = getUserNameAndPassword(UnAndPdFilePath);
             String studentNumber = userNameAndPassword.get("studentId");
@@ -44,13 +44,7 @@ public class LoginWebViewClient extends WebViewClient {
             webView.loadUrl("javascript:document.getElementById('username').value='" + studentNumber + "';document.getElementById('password').value='" + passWord + "';document.getElementsByName('submit')[0].click();");
             return;
         }
-        //登录成功再去访问申请离校页面
-        if (url.startsWith("http://my.bupt.edu.cn/index.portal")) {
-            jumpFlag = 0;
-             webView.loadUrl("https://service.bupt.edu.cn/v2/matter/start?id=578");
-            return;
-        }
-        if (url.equals("https://service.bupt.edu.cn/v2/matter/start?id=578")) {
+        if (url.startsWith("https://service.bupt.edu.cn/v2/matter/start?id=578") || url.startsWith("https://service.bupt.edu.cn/v2/matter/m_start?id=578")) {
             jumpFlag++;
             if (jumpFlag <= 1)
                 return;
@@ -172,6 +166,9 @@ public class LoginWebViewClient extends WebViewClient {
         if (url.startsWith("https://service.bupt.edu.cn/v2/matter/m_launch?type=1")) {
             Toast.makeText(loginActivity, "申请成功！", Toast.LENGTH_LONG);
             loginActivity.finish();
+        }
+        else {
+            webView.loadUrl("https://service.bupt.edu.cn/v2/matter/m_start?id=578");
         }
     }
 
