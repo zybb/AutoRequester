@@ -46,7 +46,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     //判断用户是否是首次登录
-    protected boolean checkFirstLogin(String filePath){
+    protected boolean checkFirstLogin(String filePath) {
         //判断存放用户信息的文件是否存在
         File file = new File(filePath);
         if (!file.exists()) {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this,"Failed to create user information file.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to create user information file.", Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
         //以读取配置文件的方式读取用户信息
         Properties props = new Properties();
@@ -72,21 +72,19 @@ public class MainActivity extends AppCompatActivity {
             props.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File read failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File read failed.", Toast.LENGTH_SHORT).show();
         }
         //读取配置文件
-        String userName = props.getProperty("userName");
+
         String phoneNumber = props.getProperty("phoneNumber");
         String studentId = props.getProperty("studentId");
         String passWord = props.getProperty("passWord");
         String instructorName = props.getProperty("instructorName");
-        String jobNumber = props.getProperty("jobNumber");
-        String academy = props.getProperty("academy");
         String campus = props.getProperty("campus");
-        if (userName==null || userName.length()==0 || phoneNumber==null || phoneNumber.length()==0 || studentId==null
-                || studentId.length()==0 || instructorName==null || instructorName.length()==0 || jobNumber==null
-                || jobNumber.length()==0 || campus==null || campus.length()==0 || academy==null || academy.length()==0
-                || passWord==null || passWord.length()==0) {
+        if (phoneNumber == null || phoneNumber.length() == 0 || studentId == null
+                || studentId.length() == 0 || instructorName == null || instructorName.length() == 0
+                || campus == null || campus.length() == 0
+                || passWord == null || passWord.length() == 0) {
             //关闭文件
             try {
                 inputStream.close();
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         File file = new File(filePath);
         //判断文件是否存在
         if (!file.exists()) {
-            Toast.makeText(this, "getInfo. File not exists.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "getInfo. File not exists.", Toast.LENGTH_SHORT).show();
             return null;
         }
         //读取配置文件
@@ -118,46 +116,34 @@ public class MainActivity extends AppCompatActivity {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
         Properties props = new Properties();
         try {
             props.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File read failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File read failed.", Toast.LENGTH_SHORT).show();
         }
         Map<String, String> userInfo = new HashMap<>();
-        String userName = props.getProperty("userName");
-        if (userName!=null) {
-            userInfo.put("userName", userName);
-        }
         String phoneNumber = props.getProperty("phoneNumber");
-        if (phoneNumber!=null) {
+        if (phoneNumber != null) {
             userInfo.put("phoneNumber", phoneNumber);
         }
         String studentId = props.getProperty("studentId");
-        if (studentId!=null) {
+        if (studentId != null) {
             userInfo.put("studentId", studentId);
         }
         String passWord = props.getProperty("passWord");
-        if (passWord!=null) {
+        if (passWord != null) {
             userInfo.put("passWord", passWord);
         }
         String instructorName = props.getProperty("instructorName");
-        if (instructorName!=null) {
+        if (instructorName != null) {
             userInfo.put("instructorName", instructorName);
         }
-        String jobNumber = props.getProperty("jobNumber");
-        if (jobNumber!=null) {
-            userInfo.put("jobNumber", jobNumber);
-        }
-        String academy = props.getProperty("academy");
-        if (academy!=null) {
-            userInfo.put("academy", academy);
-        }
         String campus = props.getProperty("campus");
-        if (campus!=null) {
+        if (campus != null) {
             userInfo.put("campus", campus);
         }
         //关闭文件
@@ -178,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this,"Failed to create user information file.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to create user information file.", Toast.LENGTH_SHORT).show();
             }
         }
         //用户文件转化为流
@@ -187,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             outputStream = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
         //以写入配置文件的方式写入用户信息
         Properties props = new Properties();
@@ -209,10 +195,10 @@ public class MainActivity extends AppCompatActivity {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Toast.makeText(this,"create.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "create.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this,"Failed to create matter information file.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to create matter information file.", Toast.LENGTH_SHORT).show();
             }
             return null;
         }
@@ -222,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
         //以读取配置文件的方式读取外出事项信息
         Properties props = new Properties();
@@ -230,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             props.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File read failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File read failed.", Toast.LENGTH_SHORT).show();
         }
         Map<String, String> matterResult = new HashMap<>();
         for (Object key : props.keySet()) {
@@ -240,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             inputStream.close();
         } catch (IOException e) {
-            Toast.makeText(this, "Error.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
         return matterResult;
@@ -252,10 +238,10 @@ public class MainActivity extends AppCompatActivity {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Toast.makeText(this,"add create.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "add create.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this,"Failed to create matter information file.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to create matter information file.", Toast.LENGTH_SHORT).show();
             }
         }
         //读用户文件转化为流
@@ -264,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             inputStream = new FileInputStream(file);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
 
         //读文件
@@ -274,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             props.setProperty(matterKey, matterValue);
             inputStream.close();
         } catch (IOException e) {
-            Toast.makeText(this, "Error.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -284,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
             outputStream = new FileOutputStream(file);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
 
         //写文件
@@ -292,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
             props.store(outputStream, "addMatterInfo");
             outputStream.close();
         } catch (Exception e) {
-            Toast.makeText(this, "Error.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -303,10 +289,10 @@ public class MainActivity extends AppCompatActivity {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Toast.makeText(this,"delete create.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "delete create.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(this,"Failed to create matter information file.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to create matter information file.", Toast.LENGTH_SHORT).show();
             }
             return;
         }
@@ -316,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
         //以读取配置文件的方式读取外出事项信息
         Properties props = new Properties();
@@ -328,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
             }
             inputStream.close();
         } catch (IOException e) {
-            Toast.makeText(this, "Error.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -338,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
             outputStream = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File conversion to stream failed.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File conversion to stream failed.", Toast.LENGTH_SHORT).show();
         }
         //关闭文件
         try {
@@ -348,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
             props.store(outputStream, "delete matter");
             outputStream.close();
         } catch (IOException e) {
-            Toast.makeText(this, "Error.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -359,8 +345,8 @@ public class MainActivity extends AppCompatActivity {
         yourChoices.clear();
         Map<String, String> matterResult = readMatter(filePath);
         //没有事项不弹出dialog
-        if (matterResult==null || matterResult.isEmpty()) {
-            Toast.makeText(this, "还没有设置外出事项",Toast.LENGTH_SHORT).show();
+        if (matterResult == null || matterResult.isEmpty()) {
+            Toast.makeText(this, "还没有设置外出事项", Toast.LENGTH_SHORT).show();
             return;
         }
         //设置显示的事项
@@ -373,11 +359,11 @@ public class MainActivity extends AppCompatActivity {
         }
         //将itemList转化为String数组
         String[] stringItems = new String[items.size()];
-        for (int i=0; i<items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             stringItems[i] = items.get(i);
         }
         // 设置默认选中的选项，全为false默认均未选中
-        final boolean[] initChoiceSets=new boolean[items.size()];
+        final boolean[] initChoiceSets = new boolean[items.size()];
         Arrays.fill(initChoiceSets, false);
 
         final AlertDialog.Builder multiChoiceDialog = new AlertDialog.Builder(MainActivity.this);
@@ -399,12 +385,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         List<String> myChoices = new ArrayList<>();
-                        for (int i=0; i<yourChoices.size(); i++) {
-                            myChoices.add((String)keyCache.toArray()[yourChoices.get(i)]);
+                        for (int i = 0; i < yourChoices.size(); i++) {
+                            myChoices.add((String) keyCache.toArray()[yourChoices.get(i)]);
                         }
                         deleteMatter(myChoices, filePath);
-                        for (int j=0; j<yourChoices.size(); j++) {
-                            requestInfoList.remove((int)yourChoices.get(j));
+                        for (int j = 0; j < yourChoices.size(); j++) {
+                            requestInfoList.remove((int) yourChoices.get(j));
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -415,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
     final private List<RequestInfo> requestInfoList = new ArrayList<>();
 
     // 初始化ListView数据
-    private void initRequestInfoList(String filePath){
+    private void initRequestInfoList(String filePath) {
         Map<String, String> requestInfoResult = readMatter(filePath);
         requestInfoList.clear();
         for (String key : requestInfoResult.keySet()) {
@@ -423,10 +409,12 @@ public class MainActivity extends AppCompatActivity {
             requestInfoList.add(tmp);
         }
     }
+
     private AlertDialog dialog;
     private AlertDialog addDialog;
     private String matterFilePath;
     private RequestAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -439,13 +427,10 @@ public class MainActivity extends AppCompatActivity {
         dialog = builder.create();
         //获取dialog控件
         Button buttonOK = dialogView.findViewById(R.id.buttonOK);
-        final EditText name = dialogView.findViewById(R.id.editText_name);
         final EditText phoneNumber = dialogView.findViewById(R.id.editText_phoneNumber);
         final EditText studentNumber = dialogView.findViewById(R.id.editText_studentNumber);
         final EditText password = dialogView.findViewById(R.id.editText_password);
         final EditText instructorName = dialogView.findViewById(R.id.editText_instructorName);
-        final EditText jobNumber = dialogView.findViewById(R.id.editText_jobNumber);
-        final EditText academy = dialogView.findViewById(R.id.editText_academy);
         final EditText campus = dialogView.findViewById(R.id.editText_campus);
         //设置配置文件路径
         final String filePath = this.getFilesDir().getPath() + "/userInfo";
@@ -455,52 +440,36 @@ public class MainActivity extends AppCompatActivity {
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = name.getText().toString();
                 String userPhoneNumber = phoneNumber.getText().toString();
                 String userStudentNumber = studentNumber.getText().toString();
                 String userPassword = password.getText().toString();
                 String userInstructorName = instructorName.getText().toString();
-                String userJobNumber = jobNumber.getText().toString();
-                String userAcademy = academy.getText().toString();
                 String userCampus = campus.getText().toString();
                 Map<String, String> userInfo = new HashMap<>();
-                if (userName.equals("")) {
-                    Toast.makeText(v.getContext(), "姓名不能为空！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                userInfo.put("userName", userName);
+
                 if (userPhoneNumber.equals("")) {
-                    Toast.makeText(v.getContext(), "电话号码不能为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "电话号码不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 userInfo.put("phoneNumber", userPhoneNumber);
                 if (userStudentNumber.equals("")) {
-                    Toast.makeText(v.getContext(), "学号不能为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "学号不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 userInfo.put("studentId", userStudentNumber);
                 if (userPassword.equals("")) {
-                    Toast.makeText(v.getContext(), "密码不能为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 userInfo.put("passWord", userPassword);
                 if (userInstructorName.equals("")) {
-                    Toast.makeText(v.getContext(), "导员姓名不能为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "导员姓名不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 userInfo.put("instructorName", userInstructorName);
-                if (userJobNumber.equals("")) {
-                    Toast.makeText(v.getContext(), "工号不能为空！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                userInfo.put("jobNumber", userJobNumber);
-                if (userAcademy.equals("")) {
-                    Toast.makeText(v.getContext(), "学院不能为空！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                userInfo.put("academy", userAcademy);
+
                 if (userCampus.equals("")) {
-                    Toast.makeText(v.getContext(), "校区不能为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "校区不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 userInfo.put("campus", userCampus);
@@ -513,36 +482,26 @@ public class MainActivity extends AppCompatActivity {
         boolean firstLogin = checkFirstLogin(filePath); //保证系统会有配置文件
         //读取配置文件信息到dialog
         Map<String, String> userInfo = getInfo(filePath);
-        String userName = userInfo.get("userName");
-        if (userName!=null) {
-            name.setText(userName);
-        }
+
         String userPhoneNumber = userInfo.get("phoneNumber");
-        if (userPhoneNumber!=null) {
+        if (userPhoneNumber != null) {
             phoneNumber.setText(userPhoneNumber);
         }
         String userStudentId = userInfo.get("studentId");
-        if (userStudentId!=null) {
+        if (userStudentId != null) {
             studentNumber.setText(userStudentId);
         }
         String userPassword = userInfo.get("passWord");
-        if (userPassword!=null) {
+        if (userPassword != null) {
             password.setText(userPassword);
         }
         String userInstructorName = userInfo.get("instructorName");
-        if (userInstructorName!=null) {
+        if (userInstructorName != null) {
             instructorName.setText(userInstructorName);
         }
-        String userJobNumber = userInfo.get("jobNumber");
-        if (userJobNumber!=null) {
-            jobNumber.setText(userJobNumber);
-        }
-        String userAcademy = userInfo.get("academy");
-        if (userAcademy!=null) {
-            academy.setText(userAcademy);
-        }
+
         String userCampus = userInfo.get("campus");
-        if (userCampus!=null) {
+        if (userCampus != null) {
             campus.setText(userCampus);
         }
         //首次登录或者信息不完善，弹出dialog要求用户完善
@@ -574,7 +533,7 @@ public class MainActivity extends AppCompatActivity {
                         Map<String, String> sendInfo = getInfo(filePath);
                         ArrayList<String> data = sendOutRequest(requestItem, sendInfo);
                         intent.putExtra("data", data);
-                        intent.putExtra("requestId",0);
+                        intent.putExtra("requestId", 0);
                         startActivityForResult(intent, 0);
                     }
                 });
@@ -602,14 +561,14 @@ public class MainActivity extends AppCompatActivity {
         addFinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String placeInfo =  placeEditText.getText().toString();
-                if (placeInfo.length()==0) {
-                    Toast.makeText(v.getContext(), "地点不能为空！",Toast.LENGTH_SHORT).show();
+                String placeInfo = placeEditText.getText().toString();
+                if (placeInfo.length() == 0) {
+                    Toast.makeText(v.getContext(), "地点不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String matterInfo = matterEditText.getText().toString();
-                if (matterInfo.length()==0) {
-                    Toast.makeText(v.getContext(), "事项不能为空！",Toast.LENGTH_SHORT).show();
+                if (matterInfo.length() == 0) {
+                    Toast.makeText(v.getContext(), "事项不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //添加事项并结束add dialog
@@ -632,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.putExtra("requestId",1);
+                intent.putExtra("requestId", 1);
                 startActivity(intent);
             }
         });
@@ -640,7 +599,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.putExtra("requestId",2);
+                intent.putExtra("requestId", 2);
                 startActivity(intent);
             }
         });
@@ -686,7 +645,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_actions,menu);
+        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
         return true;
     }
 
