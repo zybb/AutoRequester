@@ -1,9 +1,15 @@
 package com.example.autorequester;
 
+import android.os.Build;
 import android.util.Log;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +27,7 @@ public class LoginWebViewClient extends WebViewClient {
     private WebView webView;
     private String UnAndPdFilePath;
     private String flag;
+
     public void setData(ArrayList<String> data) {
         this.data = data;
     }
@@ -31,10 +38,10 @@ public class LoginWebViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        Log.i("LoginWebViewClient",url);
+        Log.i("LoginWebViewClient", url);
         super.onPageFinished(view, url);
         //如果有效期内没有登陆过则会访问登录页面
-        if (url.equals("https://auth.bupt.edu.cn/authserver/login?service=http%3A%2F%2Fmy.bupt.edu.cn%2Findex.portal")) {
+        if (url.startsWith("https://auth.bupt.edu.cn/authserver/login")) {
             //读配置文件获取学号和密码
             Map<String, String> userNameAndPassword = getUserNameAndPassword(UnAndPdFilePath);
             String studentNumber = userNameAndPassword.get("studentId");
@@ -44,13 +51,7 @@ public class LoginWebViewClient extends WebViewClient {
             webView.loadUrl("javascript:document.getElementById('username').value='" + studentNumber + "';document.getElementById('password').value='" + passWord + "';document.getElementsByName('submit')[0].click();");
             return;
         }
-        //登录成功再去访问申请离校页面
-        if (url.startsWith("http://my.bupt.edu.cn/index.portal")) {
-            jumpFlag = 0;
-             webView.loadUrl("https://service.bupt.edu.cn/v2/matter/start?id=578");
-            return;
-        }
-        if (url.equals("https://service.bupt.edu.cn/v2/matter/start?id=578")) {
+        if (url.startsWith("https://service.bupt.edu.cn/v2/matter/start?id=578") || url.startsWith("https://service.bupt.edu.cn/v2/matter/m_start?id=578")) {
             jumpFlag++;
             if (jumpFlag <= 1)
                 return;
@@ -61,7 +62,7 @@ public class LoginWebViewClient extends WebViewClient {
                     if (data.get(1).equals("西土城校区")) {
                         flag = "1";
                     }
-                    try{
+                    try {
                         Thread.sleep(5000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -78,7 +79,7 @@ public class LoginWebViewClient extends WebViewClient {
                                     + "document.getElementsByClassName(\"el-input__inner\")[2].dispatchEvent(evtf);");
                         }
                     });
-                    try{
+                    try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -92,7 +93,7 @@ public class LoginWebViewClient extends WebViewClient {
 
                         }
                     });
-                    try{
+                    try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -108,7 +109,7 @@ public class LoginWebViewClient extends WebViewClient {
 
                         }
                     });
-                    try{
+                    try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -124,7 +125,7 @@ public class LoginWebViewClient extends WebViewClient {
 
                         }
                     });
-                    try{
+                    try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -150,7 +151,7 @@ public class LoginWebViewClient extends WebViewClient {
 
                         }
                     });
-                    try{
+                    try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -172,6 +173,8 @@ public class LoginWebViewClient extends WebViewClient {
         if (url.startsWith("https://service.bupt.edu.cn/v2/matter/m_launch?type=1")) {
             Toast.makeText(loginActivity, "申请成功！", Toast.LENGTH_LONG);
             loginActivity.finish();
+        } else {
+            webView.loadUrl("https://service.bupt.edu.cn/v2/matter/m_start?id=578");
         }
     }
 
@@ -215,5 +218,16 @@ public class LoginWebViewClient extends WebViewClient {
             e.printStackTrace();
         }
         return matterResult;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Nullable
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+        WebResourceResponse response = super.shouldInterceptRequest(view, request);
+        if (request.getUrl().toString().equals("https://service.bupt.edu.cn/site/process/my-todo?status=0&p=1&page_size=1")) {
+            loginActivity.finish();
+        }
+        return response;
     }
 }
