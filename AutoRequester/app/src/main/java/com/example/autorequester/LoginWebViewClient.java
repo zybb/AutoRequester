@@ -141,13 +141,16 @@ public class LoginWebViewClient extends WebViewClient {
                                     + "document.getElementsByClassName(\"dplugin-mobile-newInput\")[0].value=\"" + data.get(5) + "\";"
                                     + "document.getElementsByClassName(\"dplugin_multiInput\")[0].value=\"" + data.get(6) + "\";"
                                     + "document.getElementsByClassName(\"icon\")[0].click();"
-                                    + "document.getElementById(\"UserSearch_60\").value=\"" + data.get(2) + "\";"
+                                    + "document.getElementById(\"UserSearch_73\").value=\"" + data.get(2) + "\";"
                                     + "var evt = document.createEvent(\"HTMLEvents\");"
                                     + "evt.initEvent(\"input\", true, false);"
                                     + "document.getElementsByClassName(\"dplugin-inputView\")[3].dispatchEvent(evt);"
                                     + "document.getElementsByClassName(\"dplugin-mobile-newInput\")[0].dispatchEvent(evt);"
                                     + "document.getElementsByClassName(\"dplugin_multiInput\")[0].dispatchEvent(evt);"
-                                    + "document.getElementById(\"UserSearch_60\").dispatchEvent(evt);");
+                                    + "document.getElementById(\"UserSearch_73\").dispatchEvent(evt);"
+                                    + "evt.initEvent(\"focus\", true, false);"
+                                    + "document.getElementsByClassName(\"el-input__inner\")[1].dispatchEvent(evt);")
+                                    ;
 
                         }
                     });
@@ -159,11 +162,51 @@ public class LoginWebViewClient extends WebViewClient {
                     loginActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            String js = "javascript:document.getElementsByClassName(\"li-style\")[0].click();"
+                            webView.loadUrl(
+                                    "javascript:"
+                                            + "var evt = document.createEvent(\"HTMLEvents\");"
+                                            + "evt.initEvent(\"click\", true, false);"
+                                            + "document.getElementsByClassName(\"li-style\")[0].dispatchEvent(evt);"
+                                            + "document.getElementsByClassName(\"available today\")[0].dispatchEvent(evt);"
+                                            + "evt.initEvent(\"input\", true, false);"
+                                            + "document.getElementsByClassName(\"dplugin_multiInput\")[1].dispatchEvent(evt);"
+
+                                            );
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    loginActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            webView.loadUrl(
+                                    "javascript:"
+                                            + "document.getElementById(\"UserSearch_60\").value=\"" + data.get(2) + "\";"
+                                            + "var evt = document.createEvent(\"HTMLEvents\");"
+                                            + "evt.initEvent(\"input\", true, false);"
+                                            + "document.getElementById(\"UserSearch_60\").dispatchEvent(evt);"
+
+                            );
+                        }
+                    });
+                    try{
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    loginActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String script = "javascript:"
+                                    + "var evt = document.createEvent(\"HTMLEvents\");"
+                                    + "evt.initEvent(\"click\", true, false);"
+                                    + "document.getElementsByClassName(\"li-style\")[0].dispatchEvent(evt);"
                                     + "document.getElementsByClassName(\"wxformbtn_center\")[0].children[0].click();";
-                            Log.i("js2", js);
-                            webView.loadUrl("javascript:document.getElementsByClassName(\"li-style\")[0].click();"
-                                    + "document.getElementsByClassName(\"wxformbtn_center\")[0].children[0].click();");
+                            Log.i("LoginWebViewClient", script);
+                            webView.loadUrl(script);
                         }
                     });
                 }
