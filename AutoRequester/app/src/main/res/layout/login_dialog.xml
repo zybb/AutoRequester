@@ -115,7 +115,8 @@
             <EditText
                 android:id="@+id/editText_instructorName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:hint="重名请务必填写工号"/>
         </LinearLayout>
         
 
